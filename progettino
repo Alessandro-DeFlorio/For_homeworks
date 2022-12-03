@@ -1,0 +1,257 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Alessandro-DeFlorio/For_homeworks/blob/main/progettino\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "4MGTWLXgf2lu"
+      },
+      "source": [
+        "## Biogas plant\n",
+        "\n",
+        "You want to plan the two-year supply of raw materials for a biogas power plant. Such a plant produces energy by burning biogas, which is obtained from the bacterial fermentation of organic wastes. \n",
+        "Specifically, your plant is powered by corn chopping, a residual of agro-industrial operations that you can purchase from 5 local farms. \n",
+        "The table below shows the quarterly capacity of each farm for the next two years. Quantities are measured in tons.\n",
+        "\n",
+        "Farm|T1|T2|T3|T4|T5|T6|T7|T8\n",
+        ":-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:\n",
+        "1|700|1500|700|0|0|700|1500|0\n",
+        "2|1350|0|450|0|1350|0|450|0\n",
+        "3|0|1500|1500|0|0|1500|1500|0\n",
+        "4|820|1560|820|0|820|1560|820|0\n",
+        "5|0|680|1080|0|0|680|1080|0\n",
+        "\n",
+        "Due to crop rotations and corn harvesting periods, farms are unable to supply material in some quarters. Moreover the types of corn chopping provided are different, each coming with its own unitary purchase price, unitary storage cost and percentage of dry matter. The table below shows a summary of these information.\n",
+        "\n",
+        "Farm|Purchase price|Storage cost|Dry matter\n",
+        ":-|:-:|:-:|:-:\n",
+        "1|0.20|0.002|15\n",
+        "2|0.18|0.012|28\n",
+        "3|0.19|0.007|35\n",
+        "4|0.21|0.011|37\n",
+        "5|0.23|0.015|42\n",
+        "\n",
+        "Your biogas plant must operate by burning a mixture of corn choppings with a dry matter percentage between 20% and 40%. Under these conditions, the yield is 421.6 kWh of energy per ton of burned material. The energy produced by the plant is sold on the market at a price of 0.28 $/kWh. \n",
+        "\n",
+        "Due to state regulations, all biogas plants can produce a maximum of 1950 MWh of energy per quarter. You are allowed to store corn chopping in a silo, whose total capacity is of 500 tons. \n",
+        "\n",
+        "Plan the supply and inventory of your biogas plant with the goal of maximizing your profits (i.e., revenues minus costs)."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 437
+        },
+        "id": "AXjbD65XQCeH",
+        "outputId": "6177070f-96dc-4ccb-e702-30e9e94579c0"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\n",
+            "Collecting cffi==1.15.0\n",
+            "  Downloading cffi-1.15.0-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (446 kB)\n",
+            "\u001b[K     |████████████████████████████████| 446 kB 7.2 MB/s \n",
+            "\u001b[?25hRequirement already satisfied: pycparser in /usr/local/lib/python3.8/dist-packages (from cffi==1.15.0) (2.21)\n",
+            "Installing collected packages: cffi\n",
+            "  Attempting uninstall: cffi\n",
+            "    Found existing installation: cffi 1.15.1\n",
+            "    Uninstalling cffi-1.15.1:\n",
+            "      Successfully uninstalled cffi-1.15.1\n",
+            "Successfully installed cffi-1.15.0\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "application/vnd.colab-display-data+json": {
+              "pip_warning": {
+                "packages": [
+                  "cffi"
+                ]
+              }
+            }
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\n",
+            "Collecting mip\n",
+            "  Downloading mip-1.14.1-py3-none-any.whl (15.3 MB)\n",
+            "\u001b[K     |████████████████████████████████| 15.3 MB 7.9 MB/s \n",
+            "\u001b[?25hRequirement already satisfied: cffi==1.15.0 in /usr/local/lib/python3.8/dist-packages (from mip) (1.15.0)\n",
+            "Requirement already satisfied: pycparser in /usr/local/lib/python3.8/dist-packages (from cffi==1.15.0->mip) (2.21)\n",
+            "Installing collected packages: mip\n",
+            "Successfully installed mip-1.14.1\n"
+          ]
+        }
+      ],
+      "source": [
+        "# When using Colab, make sure you run this instruction beforehand\n",
+        "!pip install --upgrade cffi==1.15.0\n",
+        "import importlib\n",
+        "import cffi\n",
+        "importlib.reload(cffi)\n",
+        "!pip install mip"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "I-AmE5iuYkME",
+        "outputId": "73011943-a1c8-4532-ea80-75b43a0570e5",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "OF\n",
+            "2861373.93\n",
+            "revenues\n",
+            "0:338242.56\n",
+            "1:544956.4\n",
+            "2:545072.02\n",
+            "3:50142.4\n",
+            "4:255748.96\n",
+            "5:523224.12\n",
+            "6:544963.47\n",
+            "7:59024.0\n",
+            "rows represent farms, columns the quarters\n",
+            "bought out material(in tonnes)\n",
+            "[700.0, 1500.0, 700.0, 0.0, 0.0, 700.0, 1500.0, 0.0]\n",
+            "[1350.0, 0.0, 450.0, 0.0, 1350.0, 0.0, 450.0, 0.0]\n",
+            "[0.0, 1500.0, 1500.0, 0.0, 0.0, 1500.0, 1500.0, 0.0]\n",
+            "[820.0, 1560.0, 820.0, 0.0, 820.0, 1560.0, 820.0, 0.0]\n",
+            "[0.0, 565.24, 1080.0, 0.0, 0.0, 680.0, 855.24, 0.0]\n",
+            "\n",
+            "burn material(in tonnes)\n",
+            "[700.0, 1000.0, 881.43, 318.57, 0.0, 700.0, 1125.0, 375.0]\n",
+            "[1350.0, 0.0, 450.0, 0.0, 1350.0, 0.0, 450.0, 0.0]\n",
+            "[0.0, 1500.0, 1393.81, 106.19, 0.0, 1500.0, 1375.0, 125.0]\n",
+            "[820.0, 1560.0, 820.0, 0.0, 820.0, 1560.0, 820.0, 0.0]\n",
+            "[0.0, 565.24, 1080.0, 0.0, 0.0, 680.0, 855.24, 0.0]\n",
+            "\n",
+            "storage capacity(in tonnes), the last column indicates the empty storage at the beginning\n",
+            "[0.0, 500.0, 318.57, -0.0, 0.0, 0.0, 375.0, 0.0, 0.0]\n",
+            "[-0.0, 0.0, -0.0, 0.0, -0.0, 0.0, -0.0, 0.0, 0.0]\n",
+            "[0.0, 0.0, 106.19, -0.0, 0.0, 0.0, 125.0, 0.0, 0.0]\n",
+            "[0.0, 0.0, -0.0, 0.0, 0.0, 0.0, -0.0, 0.0, 0.0]\n",
+            "[0.0, 0.0, -0.0, -0.0, 0.0, 0.0, -0.0, 0.0, 0.0]\n",
+            "\n"
+          ]
+        }
+      ],
+      "source": [
+        "#by Alessandro De Florio and Riccardo Cocola\n",
+        "import mip\n",
+        "#data\n",
+        "num_of_farms = 5\n",
+        "num_of_quarters = 8\n",
+        "m = range(num_of_farms)\n",
+        "n = range(num_of_quarters)\n",
+        "\n",
+        "waste_produced = [\n",
+        "    [700,1500,700, 0, 0, 700, 1500, 0],\n",
+        "    [1350, 0, 450, 0, 1350, 0, 450, 0],\n",
+        "    [0, 1500, 1500, 0, 0, 1500, 1500, 0],\n",
+        "    [820, 1560, 820, 0, 820, 1560, 820, 0],\n",
+        "    [0, 680, 1080, 0, 0, 680, 1080, 0]\n",
+        "    ]\n",
+        "\n",
+        "prices = [0.2, 0.18, 0.19, 0.21, 0.23]\n",
+        "storage_cost = [0.002, 0.012, 0.007, 0.011, 0.015]\n",
+        "dry_matter = [0.15, 0.28, 0.35, 0.37, 0.42]\n",
+        "model = mip.Model()\n",
+        "# vars\n",
+        "# tonnes of material bought from the i-th farm in the j-th quarter\n",
+        "x = [[model.add_var(var_type=\"C\") for j in n] for i in m]\n",
+        "# tonnes of material bought from the i-th farm used for energy production in the j-th quarter \n",
+        "y = [[model.add_var(var_type=\"C\") for j in n] for i in m]\n",
+        "#tonnes of material bought gfrom the i-th farm in storage during the j-th semester\n",
+        "z = [[model.add_var(var_type=\"C\") for j in range(num_of_quarters + 1)] for i in m] #j[n] == j[-1] represents the storage capacity at the start\n",
+        "\n",
+        "#constr\n",
+        "##1 the amount of material bought from a farm during a quarter cannot exceed the amount produced by said farm during said quarter\n",
+        "for i in m:\n",
+        "    for j in n:\n",
+        "        model.add_constr(x[i][j] <= waste_produced[i][j])\n",
+        "#2 the storage starts empty\n",
+        "for i in m:\n",
+        "    model.add_constr(z[i][-1] == 0)\n",
+        "    #3 storage update constraint\n",
+        "    for j in n:\n",
+        "        model.add_constr(z[i][j] == z[i][j - 1] + x[i][j] - y[i][j])\n",
+        "#4 max storage capacity is capped at 500 tonnes\n",
+        "for j in n:\n",
+        "    model.add_constr(mip.xsum(z[i][j] for i in m) <= 500)\n",
+        "\n",
+        "    #5 the material used for energy production must have an overall dry matter percentage between 20% and 40%\n",
+        "    model.add_constr(mip.xsum(0.2 * y[i][j] for i in m) <= mip.xsum(dry_matter[i] * y[i][j] for i in m))\n",
+        "    model.add_constr(mip.xsum(0.4 * y[i][j] for i in m) >= mip.xsum(dry_matter[i] * y[i][j] for i in m))\n",
+        "\n",
+        "    #6 energy production is capped at 1.95 GWH every quarter\n",
+        "    model.add_constr(mip.xsum(421.6 * y[i][j] for i in m) <= 1_950_000)\n",
+        "# O.F. maximize the profits(revenue from energy production - material cost - storage cost)\n",
+        "model.objective = mip.maximize(mip.xsum(mip.xsum(0.28 * 421.6 * y[i][j] - prices[i] * x[i][j] - storage_cost[i] * z[i][j] for i in m) for j in n))\n",
+        "\n",
+        "model.optimize()\n",
+        "\n",
+        "\n",
+        "print(\"OF\")\n",
+        "OF = sum(sum(0.28 * 421.6 * y[i][j].x - prices[i] * x[i][j].x - storage_cost[i] * z[i][j].x for i in m) for j in n)\n",
+        "print(round(OF, 2))\n",
+        "\n",
+        "print(\"revenues\")\n",
+        "for n, rev in enumerate([sum(0.28 * 421.6 * y[i][j].x - prices[i] * x[i][j].x - storage_cost[i] * z[i][j].x for i in m) for j in n]):\n",
+        "    print(f\"{n}:{round(rev, 2)}\")\n",
+        "def print_matrix(matr, title):\n",
+        "    print(title)\n",
+        "    for line in matr:\n",
+        "        print([round(x.x, 2) for x in line])\n",
+        "    print(\"\")\n",
+        "print(\"rows represent farms, columns the quarters\")\n",
+        "print_matrix(x, \"bought out material(in tonnes)\")\n",
+        "print_matrix(y, \"burn material(in tonnes)\")\n",
+        "print_matrix(z, \"storage capacity(in tonnes), the last column indicates the empty storage at the beginning\")\n"
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
