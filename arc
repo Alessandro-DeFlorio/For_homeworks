@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-07T17:31:52.438Z" agent="5.0 (Windows)" etag="hV1YYXIjtIH9EnMy4WwV" version="20.7.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-07T17:56:11.620Z" agent="5.0 (Windows)" etag="dQS05empCweU7kSQVUGK" version="20.7.4" type="github">
   <diagram id="BMcsRCMc01_FeoSoJulF" name="Pagina-1">
     <mxGraphModel dx="1646" dy="1616" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -125,13 +125,13 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="lYQjfO-AYUDeu6VJpsZj-19" value="Map&#xa;Inference&#xa;Module&#xa;" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;" parent="nUlRs-GcWZAI0aPGxgnq-27" vertex="1">
-          <mxGeometry x="360" y="382.5" width="100" height="50" as="geometry" />
+          <mxGeometry x="370" y="382.5" width="100" height="50" as="geometry" />
         </mxCell>
         <mxCell id="lYQjfO-AYUDeu6VJpsZj-20" value="Charging&#xa;Station&#xa;Handler" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;" parent="nUlRs-GcWZAI0aPGxgnq-27" vertex="1">
-          <mxGeometry x="350" y="300" width="100" height="50" as="geometry" />
+          <mxGeometry x="370" y="300" width="100" height="50" as="geometry" />
         </mxCell>
         <mxCell id="lYQjfO-AYUDeu6VJpsZj-24" value="Vehicle&#xa;Analysis&#xa;Module" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;" parent="nUlRs-GcWZAI0aPGxgnq-27" vertex="1">
-          <mxGeometry x="280" y="452.5" width="100" height="50" as="geometry" />
+          <mxGeometry x="370" y="462.5" width="100" height="50" as="geometry" />
         </mxCell>
         <mxCell id="nUlRs-GcWZAI0aPGxgnq-176" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;sketch=0;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="nUlRs-GcWZAI0aPGxgnq-27" edge="1">
           <mxGeometry relative="1" as="geometry">
