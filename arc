@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-07T21:17:38.253Z" agent="5.0 (Windows)" etag="w_T4nvg51SmuIt60qfFa" version="20.7.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-07T21:19:40.869Z" agent="5.0 (Windows)" etag="f4JKibs_ygiHXNU6pSyn" version="20.7.4" type="github">
   <diagram id="BMcsRCMc01_FeoSoJulF" name="Pagina-1">
     <mxGraphModel dx="2514" dy="2089" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -828,7 +828,7 @@
             <mxPoint x="350" y="220" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="78hqBF3k3xop-lEn4hLw-29" value="Veichle Analysis Service" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="78hqBF3k3xop-lEn4hLw-29" value="Veichle Management Service" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="216" y="-370" width="350" height="180" as="geometry" />
         </mxCell>
         <mxCell id="78hqBF3k3xop-lEn4hLw-30" value="DBMS&#xa;Application" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;" vertex="1" parent="78hqBF3k3xop-lEn4hLw-29">
@@ -867,7 +867,7 @@
             <mxPoint x="110" y="150" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="78hqBF3k3xop-lEn4hLw-36" value="&lt;div&gt;Vehicle&lt;/div&gt;&lt;div&gt;Managing&lt;/div&gt;&lt;div&gt;Interface&lt;br&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;resizable=0;points=[];outlineConnect=0;sketch=0;labelBackgroundColor=none;labelBorderColor=none;verticalAlign=top;spacingTop=0;labelPosition=left;verticalLabelPosition=bottom;horizontal=1;" vertex="1" parent="1">
+        <mxCell id="78hqBF3k3xop-lEn4hLw-36" value="&lt;div&gt;Vehicle&lt;/div&gt;&lt;div&gt;Management&lt;/div&gt;&lt;div&gt;Interface&lt;br&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;resizable=0;points=[];outlineConnect=0;sketch=0;labelBackgroundColor=none;labelBorderColor=none;verticalAlign=top;spacingTop=0;labelPosition=left;verticalLabelPosition=bottom;horizontal=1;" vertex="1" parent="1">
           <mxGeometry x="175" y="-241" width="10" height="10" as="geometry" />
         </mxCell>
         <mxCell id="78hqBF3k3xop-lEn4hLw-37" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=halfCircle;endFill=0;endSize=6;strokeWidth=1;sketch=0;" edge="1" parent="1" source="78hqBF3k3xop-lEn4hLw-34">
